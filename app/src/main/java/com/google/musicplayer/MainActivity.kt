@@ -3,45 +3,42 @@ package com.google.musicplayer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.google.musicplayer.ui.component.EmbeddedMusicPlayer
 import com.google.musicplayer.ui.theme.MusicPlayerTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: MusicPlayerViewModel by viewModels<MusicPlayerViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             MusicPlayerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                MusicPlayerScreen(viewModel)
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MusicPlayerTheme {
-        Greeting("Android")
+fun MusicPlayerScreen(viewModel: MusicPlayerViewModel) {
+    Scaffold { paddingValues ->
+        Box(modifier = Modifier.padding(paddingValues)) {
+            EmbeddedMusicPlayer(
+                playerState = viewModel.playerState,
+                onSeekBarChanged = viewModel::onSeekBarChanged,
+                onLoopClicked = viewModel::changeLoop,
+                onSkipPreviousClicked = viewModel::playPreviousTrack,
+                onPlayPauseClicked = viewModel::playPauseTrack,
+                onSkipNextClicked = viewModel::playNextTrack,
+                onFavoriteClicked = viewModel::likeUnlikeTrack
+            )
+        }
     }
 }

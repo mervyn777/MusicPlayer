@@ -21,4 +21,8 @@ Music Player component for News Feed
 - [ ] Actual song play implementation from local resource
 
 ## Demo:
-- 
+### Valid Tracks
+<video width="400" src="https://github.com/user-attachments/assets/46be3648-9bdf-4093-a3d6-ae5651d080d8"></video>
+
+### Empty State: 
+<img width="400" src="https://github.com/user-attachments/assets/dd964980-9d62-4792-8551-cc96769aadcb" />
